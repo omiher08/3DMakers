@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartagena 3D Makers | Catálogo</title>
+
+    <!-- Optimización de carga: abrir conexión anticipada al storage de imágenes (Supabase) -->
+    <link rel="preconnect" href="https://eeibzzxbpofmgbeoqaze.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://eeibzzxbpofmgbeoqaze.supabase.co">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Archivo de Estilos Externo -->
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    colors: {
+                        'brand-dark': '#050505',
+                        'brand-black': '#121212',
+                        'brand-blue': '#0070f3',
+                        'brand-glow': '#00e5ff',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased relative min-h-screen flex flex-col">
+    
+    <div class="bg-glow-center"></div>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="w-full z-50 glass-card border-b-0 sticky top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex-shrink-0 cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-cube text-brand-glow text-3xl"></i>
+                    <span class="font-bold text-2xl tracking-tight">Cartagena <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-glow">3D Makers</span></span>
+                </a>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</a>
+                        <a href="productos.html" class="text-brand-glow px-3 py-2 rounded-md text-sm font-medium transition-colors border-b-2 border-brand-glow">Catálogo</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Nosotros</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="carrito.html" class="relative text-gray-300 hover:text-white p-2 transition-colors group">
+                        <i class="fa-solid fa-cart-shopping text-xl group-hover:text-brand-glow transition-colors"></i>
+                        <span id="cart-counter" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-brand-blue rounded-full">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER CATÁLOGO -->
+    <header class="pt-12 pb-8 px-4 text-center z-10">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Nuestro <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-glow">Catálogo</span></h1>
+        <p class="text-gray-400 max-w-2xl mx-auto">Explora nuestras creaciones. Si no encuentras lo que buscas, contáctanos y lo modelamos desde cero para ti.</p>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL: Filtros y Grilla -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 flex flex-col md:flex-row gap-8 pb-20 z-10">
+        
+        <!-- SIDEBAR DE FILTROS -->
+        <aside class="w-full md:w-1/4 lg:w-1/5 flex flex-col gap-6">
+            <div class="glass-card p-1 rounded-full flex items-center pr-4 focus-within:border-brand-glow transition-colors">
+                <input type="text" id="searchInput" placeholder="Buscar modelo..." class="bg-transparent border-none outline-none text-white px-4 py-2 w-full placeholder-gray-500">
+                <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl">
+                <h3 class="font-bold text-lg mb-4 border-b border-white/10 pb-2">Categorías</h3>
+                <div class="flex flex-col gap-2" id="category-filters">
+                    <!-- Los botones se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- GRILLA DE PRODUCTOS -->
+        <section class="w-full md:w-3/4 lg:w-4/5">
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Los productos se inyectarán aquí mediante JavaScript -->
+            </div>
+            
+            <div id="no-results" class="hidden text-center py-20 text-gray-400">
+                <i class="fa-solid fa-ghost text-4xl mb-4 text-brand-blue"></i>
+                <h3 class="text-xl font-bold text-white">No encontramos ese producto</h3>
+                <p>Intenta con otra palabra o elimina los filtros.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-card mt-auto py-8 border-t border-white/10 border-l-0 border-r-0 border-b-0">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">&copy; 2026 Cartagena 3D Makers. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Archivo de JavaScript Externo -->
+    <script src="main.js"></script>
+</body>
+</html>

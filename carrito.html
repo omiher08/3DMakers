@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartagena 3D Makers | Carrito</title>
+
+    <!-- Optimización de carga: abrir conexión anticipada al storage de imágenes (Supabase) -->
+    <link rel="preconnect" href="https://eeibzzxbpofmgbeoqaze.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://eeibzzxbpofmgbeoqaze.supabase.co">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    colors: {
+                        'brand-dark': '#050505',
+                        'brand-black': '#121212',
+                        'brand-blue': '#0070f3',
+                        'brand-glow': '#00e5ff',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased relative min-h-screen flex flex-col">
+    
+    <div class="bg-glow-center"></div>
+
+    <nav class="w-full z-50 glass-card border-b-0 sticky top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex-shrink-0 cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-cube text-brand-glow text-3xl"></i>
+                    <span class="font-bold text-2xl tracking-tight">Cartagena <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-glow">3D Makers</span></span>
+                </a>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</a>
+                        <a href="productos.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Catálogo</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Nosotros</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="carrito.html" class="relative text-brand-glow p-2 transition-colors group">
+                        <i class="fa-solid fa-cart-shopping text-xl drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]"></i>
+                        <span id="cart-counter" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-brand-blue rounded-full">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-12 z-10">
+        <div class="flex items-center gap-3 mb-8 border-b border-white/10 pb-4">
+            <i class="fa-solid fa-cart-shopping text-3xl text-brand-glow"></i>
+            <h1 class="text-3xl font-bold text-white">Tu Pedido</h1>
+        </div>
+
+        <div id="empty-cart-msg" class="hidden flex-col items-center justify-center py-20 text-center">
+            <i class="fa-solid fa-box-open text-6xl text-gray-600 mb-6"></i>
+            <h2 class="text-2xl font-bold text-white mb-2">Tu carrito está vacío</h2>
+            <p class="text-gray-400 mb-8">Parece que aún no has añadido ningún modelo 3D.</p>
+            <a href="productos.html" class="btn-neon text-white font-bold py-3 px-8 rounded-full">Explorar Catálogo</a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div id="cart-items-container" class="lg:col-span-2 hidden flex flex-col gap-4">
+                </div>
+
+            <div id="cart-summary" class="hidden">
+                <div class="glass-card p-6 rounded-3xl sticky top-28">
+                    <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">Resumen del Pedido</h3>
+                    
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-gray-400">Total:</span>
+                        <span id="cart-total" class="text-3xl font-bold text-white">$0 COP</span>
+                    </div>
+
+                    <div class="text-sm text-brand-glow mb-6 bg-brand-blue/10 p-4 rounded-xl border border-brand-blue/20">
+                        <i class="fa-solid fa-circle-info mb-2 text-lg"></i>
+                        <p><strong>Nota importante sobre variantes:</strong> Te contactaremos tras realizar el pedido para coordinar manualmente los colores deseados de tu modelo.</p>
+                    </div>
+
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#1DA851] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-3 transition-all hover:-translate-y-1 active:translate-y-0 shadow-lg shadow-[#25D366]/20 mb-4">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                        Realizar Compra
+                    </button>
+                    
+                    <button onclick="clearCart()" class="w-full border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl transition-colors text-sm font-medium">
+                        <i class="fa-solid fa-trash-can mr-2"></i>Vaciar carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="glass-card mt-auto py-8 border-t border-white/10 border-l-0 border-r-0 border-b-0">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
+            &copy; 2026 Cartagena 3D Makers. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

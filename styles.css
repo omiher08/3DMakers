@@ -1,0 +1,210 @@
+/* STREAMING_CHUNK:Configuración base del documento */
+body {
+background-color: #050505;
+color: #ffffff;
+overflow-x: hidden;
+scrollbar-width: thin;
+scrollbar-color: #0070f3 #050505;
+}
+
+/* STREAMING_CHUNK:Efectos de Luces 3D */
+.bg-glow-top-left {
+position: absolute;
+width: 600px;
+height: 600px;
+background: radial-gradient(circle, rgba(0, 112, 243, 0.15) 0%, rgba(5, 5, 5, 0) 70%);
+top: -200px;
+left: -200px;
+z-index: -1;
+border-radius: 50%;
+pointer-events: none;
+}
+
+.bg-glow-center {
+position: absolute;
+width: 800px;
+height: 800px;
+background: radial-gradient(circle, rgba(0, 112, 243, 0.1) 0%, rgba(5, 5, 5, 0) 70%);
+top: 10%;
+left: 50%;
+transform: translateX(-50%);
+z-index: -1;
+border-radius: 50%;
+pointer-events: none;
+}
+
+.bg-glow-right {
+position: absolute;
+width: 500px;
+height: 500px;
+background: radial-gradient(circle, rgba(0, 229, 255, 0.1) 0%, rgba(5, 5, 5, 0) 70%);
+bottom: 10%;
+right: -100px;
+z-index: -1;
+border-radius: 50%;
+pointer-events: none;
+}
+
+/* STREAMING_CHUNK:Componentes UI y Animaciones */
+.btn-neon {
+background: linear-gradient(90deg, #0070f3, #00e5ff);
+box-shadow: 0 0 15px rgba(0, 112, 243, 0.5);
+transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+box-shadow: 0 0 25px rgba(0, 229, 255, 0.8);
+transform: translateY(-2px);
+}
+
+.glass-card {
+background: rgba(255, 255, 255, 0.03);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+border-color: rgba(0, 229, 255, 0.5);
+transform: translateY(-5px);
+box-shadow: 0 10px 30px rgba(0, 112, 243, 0.2);
+}
+
+/* Botones de filtro activos en el Catálogo */
+.filter-btn.active {
+background: linear-gradient(90deg, #0070f3, #00e5ff);
+color: white;
+border-color: transparent;
+box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+@keyframes float {
+0% { transform: translateY(0px); }
+50% { transform: translateY(-15px); }
+100% { transform: translateY(0px); }
+}
+
+.animate-float {
+animation: float 6s ease-in-out infinite;
+}
+
+/* STREAMING_CHUNK:Optimizaciones y Colores (Nuevos Estilos) */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.color-unavailable {
+    filter: grayscale(100%) opacity(0.4);
+    position: relative;
+    pointer-events: auto;
+}
+.color-unavailable::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -20%;
+    width: 140%;
+    height: 2px;
+    background-color: #ef4444; /* red-500 de Tailwind */
+    transform: translateY(-50%) rotate(-45deg);
+    z-index: 5;
+}
+
+/* STREAMING_CHUNK:Carga fluida de imágenes (skeleton + fade-in, evita layout shift y "popping") */
+
+/* Placeholder tipo shimmer detrás de la imagen mientras se descarga.
+   Se aplica al contenedor (padre) de cada <img>; su tamaño ya está
+   reservado por las clases de alto fijo (h-48, h-56, h-[350px]...),
+   así que nunca hay salto de layout al llegar la imagen real. */
+.img-skeleton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(100deg, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0.02) 60%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .img-skeleton::before { animation: none; }
+}
+
+/* Transición combinada de opacidad (fade-in al cargar) y escala (hover).
+   Se usa UNA sola clase de transición por imagen para evitar que
+   "transition-transform" de Tailwind pise la transición de "opacity"
+   (ambas no pueden convivir de forma fiable en dos clases separadas
+   con la misma especificidad CSS). */
+.img-carga-suave {
+    transition: opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-carga-suave-detalle {
+    transition: opacity 0.4s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* STREAMING_CHUNK:Galería de imágenes del producto (detalle) */
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(18, 18, 18, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-arrow:hover {
+    background: #0070f3;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+}
+
+.gallery-arrow.hidden {
+    display: none;
+}
+
+.gallery-arrow-left {
+    left: 8px;
+}
+
+.gallery-arrow-right {
+    right: 8px;
+}
+
+.gallery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-dot:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.gallery-dot.active {
+    background: linear-gradient(90deg, #0070f3, #00e5ff);
+    width: 24px;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
